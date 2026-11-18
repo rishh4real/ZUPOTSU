@@ -1,0 +1,8 @@
+{
+  "outputDirectory": "dist",
+  "functions": {
+    "api/chat.mjs": {
+      "maxDuration": 30
+    }
+  }
+}
