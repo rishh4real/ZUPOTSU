@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-      :root { --red:#ec1a26; --ink:#0c0d0f; --cream:#f7f4ef; --muted:#b9b6af; --line:rgba(255,255,255,.18); }
+      :root { --red:#d02e26; --ink:#0c0d0f; --cream:#f7f4ef; --muted:#b9b6af; --line:rgba(255,255,255,.18); }
       * { box-sizing:border-box; }
       html { scroll-behavior:smooth; background:var(--ink); }
       body { margin:0; color:var(--cream); background:var(--ink); font-family:"DM Sans",Arial,sans-serif; overflow-x:hidden; }
@@ -27,17 +27,24 @@
       .nav-links a.active { color:var(--red); position:relative; }.nav-links a.active::after { content:""; position:absolute; width:4px; height:4px; background:var(--red); border-radius:50%; left:50%; bottom:-10px; transform:translateX(-50%); }
       .nav.is-scrolled { background:#fff; box-shadow:0 1px 0 rgba(12,13,15,.1),0 7px 22px rgba(12,13,15,.06); }
       .nav.is-scrolled .nav-links { color:rgba(12,13,15,.72); }
+      .nav.is-brand-hero:not(.is-scrolled) .brand-logo { filter:brightness(0) invert(1); }
+      .nav.is-brand-hero:not(.is-scrolled) .nav-links a.active { color:var(--ink); }
+      .nav.is-brand-hero:not(.is-scrolled) .nav-links a.active::after { background:var(--ink); }
       .mini-cta { padding:10px 16px; border:1px solid rgba(255,255,255,.45); border-radius:99px; font-size:11px; font-weight:600; transition:.2s; } .mini-cta:hover { background:var(--cream); color:var(--ink); }
       .menu { display:none; border:0; background:transparent; color:#fff; font-size:26px; }
-      .hero { min-height:100svh; position:relative; isolation:isolate; display:flex; flex-direction:column; justify-content:end; padding:120px clamp(24px,5vw,80px) 52px; }
-      .hero::before { content:""; position:absolute; inset:0; z-index:-2; background: url('hero-cricket.png') center/cover no-repeat; animation:heroZoom 14s ease-out both; transition:background-image .65s ease; }
-      .hero.is-tennis::before { background-image:url('hero-tennis.png'); }
-      .hero.is-golf::before { background-image:url('hero-golf.png'); }
-      .hero::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(7,8,10,.78) 0%,rgba(7,8,10,.36) 52%,rgba(7,8,10,.1) 100%),linear-gradient(0deg,rgba(7,8,10,.9) 0%,transparent 50%); }
+      .hero { min-height:100svh; position:relative; isolation:isolate; display:flex; flex-direction:column; justify-content:end; padding:120px clamp(24px,5vw,80px) 52px; background:#d02e26; overflow:hidden; }
+      .hero::before { content:""; position:absolute; inset:0; z-index:-3; background:radial-gradient(circle at 78% 42%,rgba(255,255,255,.15),transparent 34%),linear-gradient(118deg,#d02e26 0%,#d02e26 62%,#ad201b 100%); animation:heroZoom 14s ease-out both; transition:background .65s ease; }
+      .hero.is-tennis::before { background:url('hero-tennis.png') center/cover no-repeat; }
+      .hero.is-golf::before { background:url('hero-golf.png') center/cover no-repeat; }
+      .hero::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(90deg,#d02e26 0%,rgba(208,46,38,.98) 41%,rgba(208,46,38,.43) 64%,rgba(208,46,38,.06) 100%),linear-gradient(0deg,rgba(126,21,18,.22) 0%,transparent 52%); transition:background .5s ease; }
+      .hero.is-tennis::after,.hero.is-golf::after { background:linear-gradient(90deg,rgba(7,8,10,.78) 0%,rgba(7,8,10,.36) 52%,rgba(7,8,10,.1) 100%),linear-gradient(0deg,rgba(7,8,10,.9) 0%,transparent 50%); }
+      .hero-collective { position:absolute; z-index:-1; right:-1.4vw; bottom:0; width:min(77vw,1420px); max-height:92%; object-fit:contain; object-position:right bottom; pointer-events:none; filter:drop-shadow(0 18px 24px rgba(64,8,5,.22)); transition:opacity .5s ease,transform .65s ease; }
+      .hero.is-tennis .hero-collective,.hero.is-golf .hero-collective { opacity:0; transform:translateX(5%); }
       @keyframes heroZoom { from { transform:scale(1.06); } to { transform:scale(1); } }
-      .hero-grid { max-width:1120px; }
+      .hero-grid { max-width:1120px; position:relative; z-index:1; }
       .hero h1 { margin:0; max-width:1000px; white-space:nowrap; font-family:"Manrope",sans-serif; font-size:clamp(54px,7.4vw,112px); font-weight:400; letter-spacing:-.075em; line-height:1; text-transform:none; }
-      .hero h1 .accent { color:var(--red); font-weight:600; }
+      .hero h1 .accent { color:var(--ink); font-weight:600; }
+      .hero.is-tennis h1 .accent,.hero.is-golf h1 .accent { color:var(--red); }
       .hero-subheading { max-width:570px; margin:26px 0 0; color:rgba(255,255,255,.88); font-size:16px; line-height:1.55; }
       @keyframes subheadingIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
       .hero-copy { max-width:420px; font-size:15px; line-height:1.55; color:#e0ddd7; }
@@ -71,7 +78,7 @@
       .closing { background:var(--red); color:white; min-height:620px; padding:clamp(70px,10vw,140px) clamp(24px,5vw,80px) 35px; display:flex; flex-direction:column; justify-content:space-between; }.closing-top{max-width:1320px;width:100%;margin:auto}.closing h2 { max-width:1000px; font-family:"Manrope",sans-serif; font-weight:500; font-size:clamp(60px,8.6vw,130px); letter-spacing:-.095em; text-transform:none; line-height:.82; margin:18px 0 32px; }.closing .button { background:#fff; color:var(--ink); }.closing .button:hover { background:var(--ink); color:#fff; }.footer { max-width:1320px; margin:80px auto 0; padding-top:22px; border-top:1px solid rgba(255,255,255,.5); display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; font-size:11px; color:rgba(255,255,255,.8); }.footer-nav { display:flex; gap:20px; }
       .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease,transform .7s ease; }.reveal.show { opacity:1; transform:none; }
       @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
-      @media (max-width:750px) { .nav{height:116px;padding:9px 16px;align-items:flex-start}.brand{position:absolute;top:8px;left:16px}.nav-links{display:flex;position:absolute;top:79px;left:16px;right:16px;justify-content:space-between;gap:0;font-size:9px;letter-spacing:-.02em}.brand-logo{width:88px}.hero{padding:128px 22px 52px}.hero::before{background-position:58% center}.hero h1{font-size:clamp(35px,10vw,46px)}.hero-subheading{max-width:330px;margin-top:20px;font-size:13px}.scene-controls{top:50%;bottom:auto;left:auto;right:16px;gap:3px}.scene-arrow{width:30px;height:42px}.scene-arrow::after{width:10px;height:10px;border-width:2px}.hero-bottom{margin-top:42px}.hero-tag{font-size:13px}.hero-tag b{font-size:27px}.intro{padding:75px 24px}.intro-grid{grid-template-columns:1fr;gap:28px}.section{padding:74px 22px}.section-head{display:block;margin-bottom:35px}.section-head p{margin-top:22px}.playbook{grid-template-columns:1fr}.play{min-height:245px}.play h3{font-size:42px}.image-split{min-height:610px;padding:30px 22px}.image-split::before{background-position:67% center}.split-content h2{font-size:75px}.capability-grid{grid-template-columns:1fr}.cap{min-height:210px}.closing{min-height:570px;padding:72px 22px 26px}.closing h2{font-size:78px}.footer{margin-top:55px}.footer-nav{gap:12px;flex-wrap:wrap} }
+      @media (max-width:750px) { .nav{height:116px;padding:9px 16px;align-items:flex-start}.brand{position:absolute;top:8px;left:16px}.nav-links{display:flex;position:absolute;top:79px;left:16px;right:16px;justify-content:space-between;gap:0;font-size:9px;letter-spacing:-.02em}.brand-logo{width:88px}.hero{padding:128px 22px 52px}.hero::before{background-position:58% center}.hero-collective{width:176vw;max-height:54%;right:-68vw;bottom:0;opacity:.48}.hero h1{font-size:clamp(35px,10vw,46px)}.hero-subheading{max-width:330px;margin-top:20px;font-size:13px}.scene-controls{top:50%;bottom:auto;left:auto;right:16px;gap:3px}.scene-arrow{width:30px;height:42px}.scene-arrow::after{width:10px;height:10px;border-width:2px}.hero-bottom{margin-top:42px}.hero-tag{font-size:13px}.hero-tag b{font-size:27px}.intro{padding:75px 24px}.intro-grid{grid-template-columns:1fr;gap:28px}.section{padding:74px 22px}.section-head{display:block;margin-bottom:35px}.section-head p{margin-top:22px}.playbook{grid-template-columns:1fr}.play{min-height:245px}.play h3{font-size:42px}.image-split{min-height:610px;padding:30px 22px}.image-split::before{background-position:67% center}.split-content h2{font-size:75px}.capability-grid{grid-template-columns:1fr}.cap{min-height:210px}.closing{min-height:570px;padding:72px 22px 26px}.closing h2{font-size:78px}.footer{margin-top:55px}.footer-nav{gap:12px;flex-wrap:wrap} }
       /* Keep the hero navigation pinned above every scene and section. */
       .nav{position:fixed!important;inset:0 0 auto 0;width:100%;transform:translateZ(0);will-change:transform}
     </style>
@@ -82,7 +89,8 @@
         <a class="brand" href="#home" aria-label="Zupotsu home"><img class="brand-logo" src="zupotsu-logo-clean.png" alt="Zupotsu" /></a>
         <div class="nav-links nav-right"><a class="active" aria-current="page" href="#home">Home</a><a href="#team">Team</a><a href="catalogue.html">Catalogue</a><a href="ai.html">Zupotsu AI</a><a href="#contact">Contact</a></div>
       </nav>
-      <section class="hero" id="home">
+      <section class="hero is-brand" id="home">
+        <img class="hero-collective" src="zupotsu-collective-transparent.png" alt="Zupotsu sports, talent and content team" />
         <div class="hero-grid"><h1>Beyond the <span class="accent">game.</span></h1><p class="hero-subheading">Zupotsu turns sports opportunity into brand momentum—from discovery to impact, all in one place.</p></div>
         <div class="scene-controls" aria-label="Hero scenes"><button class="scene-arrow" aria-label="Previous stadium scene">←</button><button class="scene-arrow" aria-label="Next stadium scene">→</button></div>
       </section>
@@ -110,7 +118,8 @@
       window.addEventListener('scroll',syncNav,{passive:true});
       syncNav();
       let currentScene=0;
-      const changeScene=(direction=1)=>{currentScene=(currentScene+direction+3)%3;hero.classList.toggle('is-tennis',currentScene===1);hero.classList.toggle('is-golf',currentScene===2)};
+      const changeScene=(direction=1)=>{currentScene=(currentScene+direction+3)%3;const isBrand=currentScene===0;hero.classList.toggle('is-brand',isBrand);hero.classList.toggle('is-tennis',currentScene===1);hero.classList.toggle('is-golf',currentScene===2);nav.classList.toggle('is-brand-hero',isBrand)};
+      nav.classList.add('is-brand-hero');
       let sceneTimer=window.setInterval(changeScene,5000);
       const sceneArrows=document.querySelectorAll('.scene-arrow');
       sceneArrows[0].addEventListener('click',()=>{changeScene(-1);window.clearInterval(sceneTimer);sceneTimer=window.setInterval(changeScene,5000)});
